@@ -4,7 +4,6 @@
 
 > **💡 前排说明：** 此脚本当作玩具就好，不要指望能生成像 GPT-5.5 一样的图像，但不影响预选的这些模型生图是挺优秀的。
 
-基于 **Stable Diffusion XL (SDXL)** 的 AI 绘图平台，在 **Kaggle Tesla T4 (14.6GB)** 上运行，提供 **Gradio Web UI**。
 
 ## 功能
 
@@ -37,9 +36,9 @@ masterpiece, best quality, masterpiece,best quality,official art,extremely detai
 
 | 模型 | 类型 | HF 链接 | 说明 |
 |------|------|---------|------|
-| `cagliostrolab/animagine-xl-4.0` | SDXL | [🔗](https://huggingface.co/cagliostrolab/animagine-xl-4.0) | ⭐ 当前模型，2025 最新动画 SDXL |
-| `cagliostrolab/animagine-xl-3.1` | SDXL | [🔗](https://huggingface.co/cagliostrolab/animagine-xl-3.1) | SDXL 模型 |
-| `CompVis/stable-diffusion-v1-4` | SD 1.5 | [🔗](https://huggingface.co/CompVis/stable-diffusion-v1-4) | 基础模型，兼容性最好 |
+| `cagliostrolab/animagine-xl-4.0` | SDXL | [🔗](https://huggingface.co/cagliostrolab/animagine-xl-4.0) | ⭐ 当前模型 |
+| `cagliostrolab/animagine-xl-3.1` | SDXL | [🔗](https://huggingface.co/cagliostrolab/animagine-xl-3.1) | 另一个SDXL 模型 |
+| `CompVis/stable-diffusion-v1-4` | SD 1.5 | [🔗](https://huggingface.co/CompVis/stable-diffusion-v1-4) | 基础模型 |
 
 > 部分模型需在 Hugging Face 上同意授权协议并设置 `HF_TOKEN`。
 
