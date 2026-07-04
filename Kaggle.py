@@ -2,6 +2,10 @@ import os, sys, gc, warnings, shutil, subprocess, importlib, platform, time, ran
 from pathlib import Path
 from datetime import datetime
 
+# ============================================================
+# 1. 环境清理：屏蔽日志、删除缓存、释放显存
+# ============================================================
+
 warnings.filterwarnings('ignore')
 for _k in ['TF_CPP_MIN_LOG_LEVEL', 'CUDA_LAUNCH_BLOCKING', 'PYTHONWARNINGS',
            'DIFFUSERS_VERBOSITY', 'HUGGINGFACE_HUB_VERBOSITY', 'TRANSFORMERS_VERBOSITY']:
@@ -26,10 +30,15 @@ if torch.cuda.is_available():
     p = torch.cuda.get_device_properties(0)
     print(f'{p.name} | VRAM: {p.total_memory/1024**3:.1f}GB | CUDA {torch.version.cuda}')
 
+# ============================================================
+# 2. 依赖检测：缺失则自动 pip install
+# ============================================================
+
 _REQUIRED = ['diffusers', 'transformers', 'accelerate', 'safetensors', 'matplotlib', 'gradio']
 _missing = [p for p in _REQUIRED if not importlib.util.find_spec(p.replace('-', '_'))]
 if _missing:
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-q', '--upgrade'] + _missing)
+# 锁定 Pillow 版本避免与 torchvision 冲突
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-q', '--upgrade', 'pillow>=8.0,<12.0'])
 
 from diffusers import StableDiffusionXLPipeline, AutoencoderKL
@@ -37,10 +46,18 @@ from huggingface_hub import login
 from PIL import Image
 import gradio as gr
 
-HF_TOKEN = os.environ.get('HF_TOKEN', '') or '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'
+# ============================================================
+# 3. Hugging Face 登录（如需 gated model）
+# ============================================================
+
+HF_TOKEN = os.environ.get('HF_TOKEN', '') or 'Huggingface Token填这里'
 if HF_TOKEN:
     login(token=HF_TOKEN, add_to_git_credential=False)
     print('HF login OK')
+
+# ============================================================
+# 4. 加载 SDXL 模型
+# ============================================================
 
 MODEL_ID = 'Laxhar/noobai-XL-1.0'
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -54,13 +71,21 @@ pipe = StableDiffusionXLPipeline.from_pretrained(
     token=HF_TOKEN or None,
 )
 if DEVICE == 'cuda':
-    pipe.enable_attention_slicing()
-    pipe.enable_model_cpu_offload()
+    pipe.enable_attention_slicing()       # 降低显存占用
+    pipe.enable_model_cpu_offload()       # 不用的模块卸载到 CPU
     torch.cuda.empty_cache()
 print(f'Model loaded. UNet params: {sum(p.numel() for p in pipe.unet.parameters())/1e6:.1f}M')
 
+# ============================================================
+# 5. 输出目录
+# ============================================================
+
 OUTPUT_DIR = '/kaggle/working/generated_images' if os.path.exists('/kaggle/working') else './generated_images'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# ============================================================
+# 6. 核心函数：文生图
+# ============================================================
 
 def generate(prompt, negative_prompt='', width=1024, height=1024, steps=25,
              guidance=7.0, seed=-1, num_images=1):
@@ -86,11 +111,19 @@ def generate(prompt, negative_prompt='', width=1024, height=1024, steps=25,
         img.save(path)
     return result.images, f'Done in {elapsed:.1f}s (seed={seed})'
 
+# ============================================================
+# 7. 辅助函数：列出历史图片
+# ============================================================
+
 def list_generated():
     files = sorted(Path(OUTPUT_DIR).glob('*.png'), key=os.path.getmtime, reverse=True)
     if not files:
         return [], 'No images yet.'
     return [Image.open(f) for f in files[:12]], f'{len(files)} total, showing {min(12, len(files))}'
+
+# ============================================================
+# 8. Gradio Web UI
+# ============================================================
 
 def build_ui():
     with gr.Blocks(title='AI Drawing Platform SDXL', theme=gr.themes.Soft(),
@@ -120,6 +153,10 @@ def build_ui():
         btn.click(fn=generate, inputs=[p, n, w, h, s, g, sd, ni], outputs=[gal, msg])
         ref.click(fn=list_generated, inputs=[], outputs=[his, msg])
     return ui
+
+# ============================================================
+# 9. 启动服务器（自动查找空闲端口）
+# ============================================================
 
 def launch_web():
     import socket
