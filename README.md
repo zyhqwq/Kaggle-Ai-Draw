@@ -1,5 +1,7 @@
 # AI Drawing Platform — Kaggle GPU 版
 
+> **💡 前排说明：** 此脚本当作玩具就好，不要指望能生成像 GPT-5.5 一样的图像，但不影响预选的这些模型生图是挺优秀的。
+
 基于 **Stable Diffusion XL (SDXL)** 的 AI 绘图平台，在 **Kaggle Tesla T4 (14.6GB)** 上运行，提供 **Gradio Web UI**。
 
 ## 功能
@@ -82,6 +84,14 @@ Token 在 https://huggingface.co/settings/tokens 创建。
 ## 输出目录
 
 默认保存在 `/kaggle/working/generated_images/`（Kaggle 环境）或 `./generated_images/`（本地），文件名格式为 `img_YYYYMMDD_HHMMSS_seedXXX_0.png`。
+
+## 📚 学习用途声明
+
+**本项目仅供学习、研究和教育目的使用。**
+- 用于了解 Stable Diffusion XL 模型推理流程
+- 用于学习 Gradio Web UI 搭建
+- 用于实践 Kaggle GPU 加速
+- **禁止**用于商业用途、生产环境或任何形式的盈利行为
 
 ## ⚠️ 重要：禁止使用 NSFW 模型
 
