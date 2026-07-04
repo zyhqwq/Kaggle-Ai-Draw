@@ -4,6 +4,8 @@
 
 > **💡 前排说明：** 此脚本当作玩具就好，不要指望能生成像 GPT-5.5 一样的图像，但不影响预选的这些模型生图是挺优秀的。
 
+基于 **Stable Diffusion XL (SDXL)** 的 AI 绘图平台，在 **Kaggle Tesla T4 (14.6GB)** 上运行，提供 **Gradio Web UI**。
+
 ## 功能
 
 - 文生图（Text-to-Image）
@@ -13,13 +15,29 @@
 - 历史记录浏览
 - Gradio 网页界面（可分享链接）
 
+## 当前模型效果展示 — `cagliostrolab/animagine-xl-4.0`
+
+| | | |
+|---|---|---|
+| ![示例1](image.webp) | ![示例2](image%20(1).webp) | ![示例3](image%20(2).webp) |
+
+**Prompt:**
+```
+masterpiece, best quality, masterpiece,best quality,official art,extremely detailed CG unity 8k wallpaper, day, sun, sky, sea, artbook, bishoujo, solo, long hair, white hair, wet hair, ahoge, cute face, white colored eyelashes, cat_ears, hair ear, pointy ears, red eyes, medium breasts, one breast out, one-piece swimsuit, no bra, white pantyhose, slippers, fetal_position, leg_hug
+```
+
+**Negative Prompt:** `nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet`
+
+---
+
+
 ## 支持的模型
 
 在 `Kaggle.py` 中修改 `MODEL_ID` 即可切换：
 
 | 模型 | 类型 | HF 链接 | 说明 |
 |------|------|---------|------|
-| `Laxhar/noobai-XL-1.0` | SDXL | [🔗](https://huggingface.co/Laxhar/noobai-XL-1.0) | ⭐ 当前模型 |
+| `cagliostrolab/animagine-xl-4.0` | SDXL | [🔗](https://huggingface.co/cagliostrolab/animagine-xl-4.0) | ⭐ 当前模型，2025 最新动画 SDXL |
 | `cagliostrolab/animagine-xl-3.1` | SDXL | [🔗](https://huggingface.co/cagliostrolab/animagine-xl-3.1) | SDXL 模型 |
 | `CompVis/stable-diffusion-v1-4` | SD 1.5 | [🔗](https://huggingface.co/CompVis/stable-diffusion-v1-4) | 基础模型，兼容性最好 |
 

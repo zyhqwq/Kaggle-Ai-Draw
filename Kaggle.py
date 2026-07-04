@@ -43,23 +43,27 @@ subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-q', '--upgrade'
 
 from diffusers import StableDiffusionXLPipeline, AutoencoderKL
 from huggingface_hub import login
-from PIL import Image
+from PIL import Image, ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 import gradio as gr
 
 # ============================================================
 # 3. Hugging Face 登录（如需 gated model）
 # ============================================================
 
-HF_TOKEN = os.environ.get('HF_TOKEN', '') or 'Huggingface Token填这里'
-if HF_TOKEN:
-    login(token=HF_TOKEN, add_to_git_credential=False)
-    print('HF login OK')
+HF_TOKEN = os.environ.get('HF_TOKEN', '') or ''
+if HF_TOKEN and len(HF_TOKEN) > 10:
+    try:
+        login(token=HF_TOKEN, add_to_git_credential=False)
+        print('HF login OK')
+    except Exception:
+        print('HF token invalid/expired, skipping login.')
 
 # ============================================================
 # 4. 加载 SDXL 模型
 # ============================================================
 
-MODEL_ID = 'Laxhar/noobai-XL-1.0'
+MODEL_ID = 'cagliostrolab/animagine-xl-4.0'
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 DTYPE = torch.float16 if DEVICE == 'cuda' else torch.float32
 
@@ -68,7 +72,6 @@ pipe = StableDiffusionXLPipeline.from_pretrained(
     MODEL_ID,
     torch_dtype=DTYPE,
     use_safetensors=True,
-    token=HF_TOKEN or None,
 )
 if DEVICE == 'cuda':
     pipe.enable_attention_slicing()       # 降低显存占用
