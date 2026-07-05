@@ -1,6 +1,6 @@
 # AI Drawing Platform — Kaggle GPU 版
 
-[![Kaggle](https://img.shields.io/badge/Run%20on-Kaggle-20BEFF?style=for-the-badge&logo=kaggle)](https://www.kaggle.com/code/yalsdd/kaggle-ai-draw)  [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/zyhqwq/Kaggle-Ai-Draw)
+[![Kaggle](https://img.shields.io/badge/Run%20on-Kaggle-20BEFF?style=for-the-badge&logo=kaggle)](https://www.kaggle.com/code/yalsdd/kaggle-ai-draw)  [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/zyhqwq/Kaggle-Ai-Draw)   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/104yO2a6p8_Fd7Cr_G70O_oq-5zYRtVss?usp=sharing)
 
 > **💡 前排说明：** 此脚本当作玩具就好，不要指望能生成像 GPT-5.5 一样的图像，但不影响预选的这些模型生图是挺优秀的。
 
