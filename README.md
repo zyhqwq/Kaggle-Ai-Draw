@@ -1,4 +1,4 @@
-# AI Drawing Platform — Kaggle GPU 版
+# AI Drawing Platform — Kaggle/Colab GPU 版
 
 [![Kaggle](https://img.shields.io/badge/Run%20on-Kaggle-20BEFF?style=for-the-badge&logo=kaggle)](https://www.kaggle.com/code/yalsdd/kaggle-ai-draw)  [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/zyhqwq/Kaggle-Ai-Draw)   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/104yO2a6p8_Fd7Cr_G70O_oq-5zYRtVss?usp=sharing)
 
