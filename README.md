@@ -65,8 +65,7 @@ list_generated()
 ### 3. 设置 HF Token（如需授权模型）
 
 ```python
-import os
-os.environ['HF_TOKEN'] = 'Huggingface Token在这里设置'
+HF_TOKEN = os.environ.get('HF_TOKEN', '') or 'Huggingface Token填在这里'
 ```
 
 Token 在 https://huggingface.co/settings/tokens 创建。
@@ -94,7 +93,9 @@ Token 在 https://huggingface.co/settings/tokens 创建。
 
 ## 输出目录
 
-默认保存在 `/kaggle/working/generated_images/`（Kaggle 环境）或 `./generated_images/`（本地），文件名格式为 `img_YYYYMMDD_HHMMSS_seedXXX_0.png`。
+Kaggle默认保存在 `/kaggle/working/generated_images/`（Kaggle 环境）或 `./generated_images/`（本地），文件名格式为 `img_YYYYMMDD_HHMMSS_seedXXX_0.png`。
+Colab默认不保存图片文件
+
 
 ## 📚 学习用途声明
 
